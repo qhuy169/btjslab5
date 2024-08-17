@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var newchar = prompt("Nhập vào chuỗi char code cách nhau bằng dấu cách:")
+        var arr = newchar.split(" ");
+        var arrtext = []
+        for(let i = 0; i < arr.length; i++){
+            var char = String.fromCharCode(arr[i]);
+            arrtext.push(char)
+        }
+        for(let j = 0; j < arrtext.length; j++){
+            document.write(arrtext[j] + " ");
+        }
+    </script>
+</body>
+</html>

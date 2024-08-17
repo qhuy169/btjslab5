@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 500px;
+            box-sizing: border-box;
+        }
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+        div {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"], 
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        .checkbox{
+            display: flex;
+        }
+        #rememberlabel{
+            margin-top: 8px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        p {
+            display: none;
+            color: red;
+            font-size: 14px;
+        }
+        .active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <form name="frm">
+        <h2>Đăng kí</h2>
+        <div>
+            <label for="username">UserName</label>
+            <input type="text" id="username" name="username">
+            <p id="erName">Tên đăng nhập không được bỏ trống!</p>
+        </div>
+        <div>
+            <label for="password">PassWord</label>
+            <input type="password" name="password" id="password">
+            <p id="erPass">Mật khẩu không được bỏ trống!</p>
+        </div>
+        <div>
+            <label for="repassword">Re-PassWord</label>
+            <input type="password" name="repassword" id="repassword">
+            <p id="erRePass1">Nhập lại mật khẩu không được bỏ trống!</p>
+            <p id="erRePass2">Mật khẩu nhập lại không khớp với mật khẩu!</p>
+        </div>
+        <div>
+            <label for="fullname">FullName</label>
+            <input type="text" id="fullname" name="fullname">
+            <p id="erFullName">Họ và tên không được bỏ trống!</p>
+        </div>
+        <div>
+            <label for="birthday">Ngày/tháng/năm sinh(DD/MM/YYYY)</label>
+            <input type="text" id="birthday" name="birthday">
+            <p id="erDate1">Ngày sinh không được bỏ trống!</p>
+            <p id="erDate2">Bạn chưa đủ 18 tuổi! Bạn ko phải sinh viên!</p>
+            <p id="erDate3">Ngày sinh phải đúng định dạng DD/MM/YYYY!</p>
+            <p id="erDate4">Ngày sinh bạn nhập không hợp lệ!</p>
+        </div>
+        <div class="checkbox">
+            <input type="checkbox" name="remember" id="remember">
+            <label for="remember" id="rememberlabel">Remember</label>
+        </div>
+        <div>
+            <input type="submit" name="submit" id="submit" value="Đăng nhập" onclick="login(event)">
+        </div>
+    </form>
+    <script>
+        function login(event) {
+            event.preventDefault();  
+            const username = frm.username.value.trim();
+            const password = frm.password.value.trim();
+            const fullname = frm.fullname.value.trim();
+            const repassword = frm.repassword.value.trim();
+            const date = frm.birthday.value.trim();
+
+            const today = new Date();
+            let valid = true;
+
+            if (date.length !== 10 || date[2] !== '/' || date[5] !== '/') {
+                document.getElementById("erDate3").classList.add("active");
+                valid = false;
+            } else {
+                const day = parseInt(date.substring(0, 2), 10);
+                const month = parseInt(date.substring(3, 5), 10);
+                const year = parseInt(date.substring(6, 10), 10);
+
+                if (
+                    isNaN(day) || isNaN(month) || isNaN(year) || 
+                    day < 1 || day > 31 || month < 1 || month > 12 || 
+                    year < 1900 || year > today.getFullYear() ||
+                    (month === 2 && day > 29) || 
+                    ([4, 6, 9, 11].includes(month) && day > 30) ||
+                    (month === 2 && day === 29 && !((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0))
+                ) {
+                    document.getElementById("erDate4").classList.add("active");
+                    valid = false;
+                } else {
+                    const birthDate = new Date(year, month - 1, day);
+                    let age = today.getFullYear() - birthDate.getFullYear();
+                    const monthDiff = today.getMonth() - birthDate.getMonth();
+                    const dayDiff = today.getDate() - birthDate.getDate();
+                    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+                        age--;
+                    }
+                    if (age < 18) {
+                        document.getElementById("erDate2").classList.add("active");
+                        valid = false;
+                    } else {
+                        document.getElementById("erDate1").classList.remove("active");
+                        document.getElementById("erDate2").classList.remove("active");
+                        document.getElementById("erDate3").classList.remove("active");
+                        document.getElementById("erDate4").classList.remove("active");
+                    }
+                }
+            }
+
+            if (username === "") {
+                document.getElementById("erName").classList.add("active");
+                valid = false;
+            } else {
+                document.getElementById("erName").classList.remove("active");
+            }
+
+            if (password === "") {
+                document.getElementById("erPass").classList.add("active");
+                valid = false;
+            } else {
+                document.getElementById("erPass").classList.remove("active");
+            }
+
+            if (repassword === "") {
+                document.getElementById("erRePass1").classList.add("active");
+                valid = false;
+            } else if (password !== repassword) {
+                document.getElementById("erRePass2").classList.add("active");
+                valid = false;
+            } else {
+                document.getElementById("erRePass1").classList.remove("active");
+                document.getElementById("erRePass2").classList.remove("active");
+            }
+
+            if (fullname === "") {
+                document.getElementById("erFullName").classList.add("active");
+                valid = false;
+            } else {
+                document.getElementById("erFullName").classList.remove("active");
+            }
+
+            if (valid) {
+                alert("Đăng nhập thành công");
+            }
+        }
+    </script>
+</body>
+</html>

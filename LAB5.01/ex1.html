@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p {
+            display: none;
+            color: red;
+        }
+        .active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <form name="frm">
+        <div>
+            <label for="username">UserName</label>
+            <input type="text" id="username" name="username">
+            <p id="erName">Tên đăng nhập không được bỏ trống!</p>
+        </div>
+        <div>
+            <label for="password">PassWord</label>
+            <input type="password" name="password" id="password">
+            <p id="erPass">Mật khẩu không được bỏ trống!</p>
+        </div>
+        <div>
+            <input type="checkbox" name="remember" id="remember">
+            <label for="remember">Remember</label>
+        </div>
+        <div>
+            <input type="submit" name="submit" id="submit" value="Đăng nhập" onclick="login(event)">
+        </div>
+    </form>
+    <script>
+        function login(event) {
+            event.preventDefault();  // Ngăn chặn việc gửi form để kiểm tra thủ công
+            
+            const username = frm.username.value.trim();
+            const password = frm.password.value.trim();
+            let valid = true;
+
+            // Kiểm tra trường tên đăng nhập
+            if (username === "") {
+                document.getElementById("erName").classList.add("active");
+                valid = false;
+            } else {
+                document.getElementById("erName").classList.remove("active");
+            }
+
+            // Kiểm tra trường mật khẩu
+            if (password === "") {
+                document.getElementById("erPass").classList.add("active");
+                valid = false;
+            } else {
+                document.getElementById("erPass").classList.remove("active");
+            }
+
+            // Nếu cả hai trường đều hợp lệ
+            if (valid) {
+                if (username === "huy" && password === "123") {
+                    alert("Welcome to world of Javascript!");
+                } else {
+                    alert("Invalid Username or Password!");
+                }
+            }
+        }
+    </script>
+</body>
+</html>

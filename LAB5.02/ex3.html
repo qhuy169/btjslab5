@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var number;
+        do {
+            number = prompt("Nhập một số gồm 2 chữ số (từ 10 đến 99):");
+            number = parseInt(number); 
+        } while (isNaN(number) || number < 10 || number > 99);
+
+        document.write(`Số bạn đã nhập là: ${number}<br>`);
+
+        var totalChan = 0;
+        var totalLe = 0;
+        var countChan = 0;
+        var countLe = 0;
+
+        for (var i = 1; i <= number; i++) {
+            if (i % 2 == 0) {
+                totalChan += i;
+                countChan += 1;
+            }
+        }
+
+        document.write(`Có ${countChan} số Chẵn từ 1 đến ${number}<br>`);
+        document.write(`Tổng các số Chẵn từ 1 đến ${number} là: ${totalChan}<br>`);
+
+        for (var i = 1; i <= number; i++) {
+            if (i % 2 == 1) {
+                totalLe += i;
+                countLe += 1;
+            }
+        }
+
+        document.write(`Có ${countLe} số Lẻ từ 1 đến ${number}<br>`);
+        document.write(`Tổng các số Lẻ từ 1 đến ${number} là: ${totalLe}<br>`);
+    </script>
+</body>
+</html>

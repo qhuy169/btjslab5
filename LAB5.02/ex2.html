@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var a = prompt("Nhập hệ số a:")
+        var b = prompt("Nhập hệ số b:")
+        var c = prompt("Nhập hệ số c:")
+        if(a == 0){
+            ptb1(b, c)
+        } else {
+            ptb2(a, b, c)
+        }
+        function ptb1(b, c){
+            if(b == 0){
+                if(c == 0){
+                    document.write("Phương trình vô số nghiệm")
+                } else{
+                    document.write("Phương trình vô nghiệm")
+                }   
+            } else{
+                document.write("Phương trình có một nghiệm: " + (-c/b))
+            }
+        }
+        function ptb2(a, b, c){
+            let delta = b*b - 4*a*c
+            if(delta < 0){
+                document.write("Phương trình vô nghiệm")
+            } else if(delta == 0){
+                document.write("Phương trình có nghiệm kép: " + (-b/2*a))
+            } else{
+                document.write("Phương trình có hai nghiệm phân biệt:<br>")
+                document.write("x1:" + (-b+Math.sqrt(delta))/(2*a) + "<br>")
+                document.write("x2:" + (-b-Math.sqrt(delta))/(2*a) + "<br>")
+            }
+        }
+    </script>
+</body>
+</html>

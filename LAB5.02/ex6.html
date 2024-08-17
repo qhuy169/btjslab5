@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let number;
+        do {
+            number = prompt("Nhập số phần tử của mảng: ");
+            number = parseInt(number); 
+        } while (isNaN(number) || number <= 0);
+
+        var arr = [];
+        for(let i = 0; i < number; i++){
+            arr.push(parseInt(prompt("Nhập phần tử thứ " + (i + 1))));
+        }
+
+        document.write(`Mảng đã nhập là: ${arr.join(", ")}<br>`);
+
+        var totalChan = 0;
+        var totalLe = 0;
+        var arrChan = []
+        var arrLe = []
+        for(let i = 0; i < arr.length; i++){
+            if(arr[i] % 2 === 0){
+                totalChan += arr[i];
+                arrChan.push(arr[i]);
+            }
+            if(arr[i] % 2 === 1){
+                totalLe += arr[i];
+                arrLe.push(arr[i]);
+            }
+        }
+        document.write(`Trong mảng có các số chẵn là: ${arrChan.join(",")}<br>`)
+        document.write(`Tổng các số chẵn trong mảng là: ${totalChan}<br>`);
+        document.write(`Trong mảng có các số lẻ là: ${arrLe.join(",")}<br>`)
+        document.write(`Tổng các số lẻ trong mảng là: ${totalLe}<br>`);
+    </script>
+</body>
+</html>
